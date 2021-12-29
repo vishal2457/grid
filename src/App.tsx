@@ -1,25 +1,59 @@
-import React from 'react';
-import logo from './logo.svg';
+
+import { useEffect, useState } from 'react';
 import './App.css';
+import { DataGrid } from './lib';
+import {headerObject} from "./lib/index.d"
 
 function App() {
+  const [data, setData]:any[] = useState([]);
+
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/comments')
+    .then(response => response.json())
+    .then(data => setData(data))
+    .then((json) => console.log(json));
+
+  }, [])
+
+ 
+
+  let header: headerObject[] = [
+{
+  field: "email",
+  title: "Email",
+  filter: {
+    type: "text",
+  }
+  
+},
+{
+  field: "postId",
+  title: "postId",
+  filter: {
+    type: "text"
+  }
+},
+{
+  field: "id",
+  title: "id",
+  filter: {
+    type: "text"
+  }
+},
+{
+  field: "name",
+  title: "name",
+  filter: {
+    type: "text"
+  }
+},
+
+  ]
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+   <DataGrid 
+   data={data}
+   header={header}
+   />
   );
 }
 
